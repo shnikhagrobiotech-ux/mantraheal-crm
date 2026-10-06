@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sign In') - {{ config('mantraheal.company_name', 'MantraHeal CRM') }}</title>
     
-    <!-- Offline Local CSS -->
-    <link rel="stylesheet" href="{{ asset('css/tailwind.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mantraheal.css') }}">
+    <!-- Local CSS & Scripts (Root-relative to prevent Mixed Content) -->
+    <link rel="stylesheet" href="/css/tailwind.min.css">
+    <link rel="stylesheet" href="/css/mantraheal.css">
 
-    <!-- Offline Local JavaScript -->
-    <script src="{{ asset('js/alpine.min.js') }}" defer></script>
+    <!-- Local JavaScript -->
+    <script src="/js/alpine.min.js" defer></script>
     <style>
         body.login-bg {
             background: radial-gradient(circle at 50% 15%, #1e293b 0%, #0f172a 45%, #020617 100%) !important;

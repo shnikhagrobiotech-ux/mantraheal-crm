@@ -11,14 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Offline Local CSS (No CDN) -->
-    <link rel="stylesheet" href="{{ asset('css/tailwind.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mantraheal.css') }}">
+    <!-- Local CSS & Modern Theme -->
+    <link rel="stylesheet" href="/css/tailwind.min.css">
+    <link rel="stylesheet" href="/css/mantraheal.css">
 
-    <!-- Offline Local JavaScript (No CDN) -->
-    <script src="{{ asset('js/alpine.min.js') }}" defer></script>
-    <script src="{{ asset('js/chart.min.js') }}"></script>
-    <script src="{{ asset('js/mantraheal.js') }}"></script>
+    <!-- Local JavaScript -->
+    <script src="/js/alpine.min.js" defer></script>
+    <script src="/js/chart.min.js"></script>
+    <script src="/js/mantraheal.js"></script>
 </head>
 <body class="h-full antialiased text-slate-800 bg-slate-50/70" x-data="{ sidebarOpen: false, userDropdown: false }">
     <div class="min-h-full flex">

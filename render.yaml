@@ -13,6 +13,10 @@ services:
         value: production
       - key: APP_DEBUG
         value: true
+      - key: APP_URL
+        value: "https://mantraheal-crm.onrender.com"
+      - key: ASSET_URL
+        value: "https://mantraheal-crm.onrender.com"
       - key: APP_KEY
         value: "base64:oADD47bw/Z5vH74kbx/utuECXi7my7NiSmBPu1m7nwA="
       - key: DB_CONNECTION
