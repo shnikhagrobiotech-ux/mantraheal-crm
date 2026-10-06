@@ -5,21 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sign In') - {{ config('mantraheal.company_name', 'MantraHeal CRM') }}</title>
     
-    <!-- Local CSS & Scripts (Root-relative to prevent Mixed Content) -->
+    <!-- Modern Typography (Google Fonts with System Fallbacks) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Local CSS & Theme Engine -->
     <link rel="stylesheet" href="/css/tailwind.min.css">
     <link rel="stylesheet" href="/css/mantraheal.css">
 
     <!-- Local JavaScript -->
     <script src="/js/alpine.min.js" defer></script>
     <style>
+        html {
+            height: 100%;
+        }
         body.login-bg {
-            background: radial-gradient(circle at 50% 15%, #1e293b 0%, #0f172a 45%, #020617 100%) !important;
+            background: radial-gradient(ellipse at 50% 20%, #0f172a 0%, #070b14 60%, #020617 100%) !important;
             min-height: 100vh;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            margin: 0 !important;
+            padding: 1.5rem !important;
+            box-sizing: border-box !important;
+            color: #f1f5f9;
         }
         .login-card {
-            background-color: #0f172a !important;
-            border: 1px solid #334155 !important;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+            background: rgba(15, 23, 42, 0.92) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(51, 65, 85, 0.8) !important;
+            border-radius: 1.25rem !important;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+            width: 100% !important;
+            max-width: 28rem !important;
+            padding: 2.25rem !important;
+            box-sizing: border-box !important;
         }
     </style>
 </head>
