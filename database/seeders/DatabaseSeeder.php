@@ -64,8 +64,10 @@ class DatabaseSeeder extends Seeder
 
         $roles = [];
         foreach ($rolesData as $rd) {
-            $roles[$rd['slug']] = Role::create($rd);
+            $roles[$rd['slug']] = Role::firstOrCreate(['slug' => $rd['slug']], $rd);
         }
+
+        $this->call(RolePermissionSeeder::class);
 
         // 2. USERS (STAFF)
         $password = Hash::make('password123');

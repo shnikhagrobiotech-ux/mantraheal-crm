@@ -22,5 +22,18 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production') || request()->header('X-Forwarded-Proto') === 'https' || env('FORCE_HTTPS', false)) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
+            if ($user->isSuperAdmin()) {
+                return true;
+            }
+        });
+
+        \Illuminate\Support\Facades\Gate::after(function ($user, string $ability, $result) {
+            if ($result !== null) {
+                return $result;
+            }
+            return $user->hasPermission($ability);
+        });
     }
 }

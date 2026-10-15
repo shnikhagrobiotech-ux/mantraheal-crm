@@ -6,6 +6,7 @@ use App\Models\AuditLog;
 use App\Models\FollowUp;
 use App\Models\Lead;
 use App\Models\Order;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\SalesCall;
 use App\Models\User;
@@ -18,8 +19,53 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = User::with('role')->paginate(15);
-        $roles = Role::all();
-        return view('employees.index', compact('employees', 'roles'));
+        $roles = Role::with(['permissions', 'users'])->get();
+        $permissionsByModule = Permission::all()->groupBy('module');
+        return view('employees.index', compact('employees', 'roles', 'permissionsByModule'));
+    }
+
+    public function updateRolePermissions(Request $request, Role $role)
+    {
+        $validated = $request->validate([
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->filled('description')) {
+            $role->update(['description' => $validated['description']]);
+        }
+
+        $role->permissions()->sync($validated['permissions'] ?? []);
+
+        AuditLog::log('updated', $role, "Updated permissions for role {$role->name} (" . count($validated['permissions'] ?? []) . " permissions granted)");
+
+        return back()->with('success', "Permissions for role '{$role->name}' updated successfully.");
+    }
+
+    public function storeRole(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:100|unique:roles,name',
+            'slug' => 'required|string|max:100|unique:roles,slug|regex:/^[a-z0-9_]+$/',
+            'description' => 'nullable|string|max:255',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
+        ]);
+
+        $role = Role::create([
+            'name' => $validated['name'],
+            'slug' => $validated['slug'],
+            'description' => $validated['description'] ?? null,
+        ]);
+
+        if (!empty($validated['permissions'])) {
+            $role->permissions()->sync($validated['permissions']);
+        }
+
+        AuditLog::log('created', $role, "Created new role '{$role->name}' with " . count($validated['permissions'] ?? []) . " permissions");
+
+        return back()->with('success', "Role '{$role->name}' created successfully.");
     }
 
     public function show(User $employee)

@@ -32,7 +32,7 @@ class CheckRole
         }
 
         foreach ($roles as $role) {
-            if ($user->hasRole($role)) {
+            if ($user->hasRole($role) || $user->hasPermission($role)) {
                 return $next($request);
             }
         }

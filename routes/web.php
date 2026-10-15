@@ -126,16 +126,20 @@ Route::middleware('auth')->group(function () {
         Route::get('rto', [ReportController::class, 'rto'])->name('rto');
     });
 
-    // Employee & User Management
-    Route::resource('employees', EmployeeController::class)->only(['index', 'create', 'store', 'show', 'update']);
+    // Employee & Role Permission Management (Admins only)
+    Route::middleware('role:super_admin,admin')->group(function () {
+        Route::resource('employees', EmployeeController::class)->only(['index', 'create', 'store', 'show', 'update']);
+        Route::post('roles/{role}/permissions', [EmployeeController::class, 'updateRolePermissions'])->name('roles.update-permissions');
+        Route::post('roles', [EmployeeController::class, 'storeRole'])->name('roles.store');
 
-    // Audit Logs
-    Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
+        // Audit Logs
+        Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit.index');
 
-    // Settings
-    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
-    Route::post('settings/test-integration', [SettingController::class, 'testIntegration'])->name('settings.test-integration');
+        // Settings
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::post('settings/test-integration', [SettingController::class, 'testIntegration'])->name('settings.test-integration');
+    });
 
     // In-App Softphone Dialer
     Route::get('dialer/lookup', [DialerController::class, 'lookup'])->name('dialer.lookup');

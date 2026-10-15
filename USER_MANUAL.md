@@ -47,6 +47,8 @@ The platform enforces Role-Based Access Control (RBAC). Access levels and pre-co
 | **Sales Executive** | `rahul.sales@mantraheal.com` | `password123` | Telesales dialer, assigned lead pipeline, call logging, and customer conversion. |
 | **Sales Executive** | `priya.sales@mantraheal.com` | `password123` | Direct customer follow-up, inbound consultation, and order creation. |
 | **Inventory Manager** | `stock@mantraheal.com` | `password123` | Warehouse stock entry, GRN receipts, batch verification, and expiry tracking. |
+| **Customer Support** | `support@mantraheal.com` | `password123` | Customer tickets, order inquiries, returns QC, refunds, and WhatsApp messaging. |
+| **Accounts** | `accounts@mantraheal.com` | `password123` | Invoices, payment reconciliation, refunds, and financial sales reports. |
 
 > [!NOTE]
 > On the login page, you can use the **1-Click Quick Preset Buttons** to instantly log in as any role without typing.

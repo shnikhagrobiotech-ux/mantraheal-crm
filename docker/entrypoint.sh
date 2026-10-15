@@ -35,6 +35,7 @@ php artisan migrate --force || true
 
 echo "Seeding default records if database is fresh..."
 php artisan db:seed --force || true
+php artisan db:seed --class=RolePermissionSeeder --force || true
 
 # CRITICAL for SQLite and File Sessions: Ensure www-data ownership and write permissions AFTER migrations
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database

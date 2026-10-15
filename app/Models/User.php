@@ -51,6 +51,63 @@ class User extends Authenticatable
         return $roleSlug === $roles;
     }
 
+    public function hasPermission(string|array $permissions): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if (!$this->relationLoaded('role')) {
+            $this->load('role.permissions');
+        } elseif ($this->role && !$this->role->relationLoaded('permissions')) {
+            $this->role->load('permissions');
+        }
+
+        $assignedSlugs = $this->role?->permissions->pluck('slug')->toArray() ?? [];
+
+        if (is_array($permissions)) {
+            return count(array_intersect($permissions, $assignedSlugs)) > 0;
+        }
+
+        return in_array($permissions, $assignedSlugs);
+    }
+
+    public function hasAnyPermission(array $permissions): bool
+    {
+        return $this->hasPermission($permissions);
+    }
+
+    public function hasAllPermissions(array $permissions): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if (!$this->relationLoaded('role')) {
+            $this->load('role.permissions');
+        } elseif ($this->role && !$this->role->relationLoaded('permissions')) {
+            $this->role->load('permissions');
+        }
+
+        $assignedSlugs = $this->role?->permissions->pluck('slug')->toArray() ?? [];
+        return count(array_intersect($permissions, $assignedSlugs)) === count($permissions);
+    }
+
+    public function canAccessModule(string $module): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        if (!$this->relationLoaded('role')) {
+            $this->load('role.permissions');
+        } elseif ($this->role && !$this->role->relationLoaded('permissions')) {
+            $this->role->load('permissions');
+        }
+
+        return $this->role?->permissions->contains('module', $module) ?? false;
+    }
+
     public function isSuperAdmin(): bool
     {
         return $this->hasRole('super_admin');

@@ -57,6 +57,7 @@
                 </a>
 
                 <!-- SALES -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->isSalesExecutive() || auth()->user()->hasPermission(['leads.view', 'customers.view', 'calls.view']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Sales & Leads</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -65,10 +66,12 @@
                     <svg class="w-4 h-4 mr-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     Leads Pipeline
                 </a>
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->hasPermission('leads.import'))
                 <a href="{{ route('leads.import') }}" class="nav-item-transition flex items-center px-3 py-1.5 rounded-lg text-xs font-medium transition pl-8 {{ request()->routeIs('leads.import*') ? 'bg-teal-700/80 text-white font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-3.5 h-3.5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     Import CSV Leads
                 </a>
+                @endif
                 <a href="{{ route('customers.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('customers.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                     Customers 360
@@ -81,8 +84,10 @@
                     <svg class="w-4 h-4 mr-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Follow-ups
                 </a>
+                @endif
 
                 <!-- ORDERS -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->isSalesExecutive() || auth()->user()->isAccounts() || auth()->user()->isCustomerSupport() || auth()->user()->hasPermission('orders.view'))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Order Lifecycle</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -107,24 +112,34 @@
                     <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2.5"></span>
                     Delivered
                 </a>
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isInventoryManager() || auth()->user()->hasPermission('deliveries.manage'))
                 <a href="{{ route('deliveries.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('deliveries.*') ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-glow-indigo font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
                     Delivery & Dispatch
                 </a>
+                @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isCustomerSupport() || auth()->user()->isInventoryManager() || auth()->user()->hasPermission('returns.manage'))
                 <a href="{{ route('returns.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('returns.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
                     Returns & QC
                 </a>
+                @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isAccounts() || auth()->user()->isCustomerSupport() || auth()->user()->hasPermission('refunds.manage'))
                 <a href="{{ route('refunds.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('refunds.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Refunds
                 </a>
+                @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isInventoryManager() || auth()->user()->isCustomerSupport() || auth()->user()->hasPermission('rto.manage'))
                 <a href="{{ route('rto.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('rto.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     RTO Management
                 </a>
+                @endif
+                @endif
 
                 <!-- PRODUCTS & INVENTORY -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isInventoryManager() || auth()->user()->hasPermission(['inventory.view', 'products.view']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Products & Stock</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -157,8 +172,10 @@
                     <svg class="w-4 h-4 mr-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Expiry Alerts
                 </a>
+                @endif
 
                 <!-- PURCHASE -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isInventoryManager() || auth()->user()->isAccounts() || auth()->user()->hasPermission(['suppliers.manage', 'purchase_orders.manage', 'grn.manage']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Purchase & Supply</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -175,8 +192,10 @@
                     <svg class="w-4 h-4 mr-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     GRN (Goods Receipt)
                 </a>
+                @endif
 
                 <!-- COMMUNICATION -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->isSalesExecutive() || auth()->user()->isCustomerSupport() || auth()->user()->hasPermission(['whatsapp.manage', 'recordings.listen']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Communication</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -185,16 +204,22 @@
                     <svg class="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     WhatsApp Messenger
                 </a>
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->hasPermission('shopify.sync'))
                 <a href="{{ route('shopify.sync.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('shopify.sync.*') ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow-emerald font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     Shopify Sync Hub
                 </a>
+                @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->hasPermission('recordings.listen'))
                 <a href="{{ route('call-recordings.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('call-recordings.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path></svg>
                     Call Recordings
                 </a>
+                @endif
+                @endif
 
                 <!-- MARKETING -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->hasPermission(['marketing.view', 'meta.sync']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Marketing & Ads</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -207,8 +232,10 @@
                     <svg class="w-4 h-4 mr-3 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 008.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
                     Meta Ads Sync Hub
                 </a>
+                @endif
 
                 <!-- SUPPORT -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isCustomerSupport() || auth()->user()->hasPermission('support.manage'))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Helpdesk Support</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
@@ -217,12 +244,15 @@
                     <svg class="w-4 h-4 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     Tickets & Complaints
                 </a>
+                @endif
 
                 <!-- REPORTS -->
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->isInventoryManager() || auth()->user()->isAccounts() || auth()->user()->hasPermission('reports.view'))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Analytics & Reports</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
                 </div>
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isSalesManager() || auth()->user()->isAccounts())
                 <a href="{{ route('reports.sales') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('reports.sales') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     Sales Reports
@@ -235,6 +265,8 @@
                     <svg class="w-4 h-4 mr-3 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                     Call Reports
                 </a>
+                @endif
+                @if(auth()->user()->isSuperAdmin() || auth()->user()->isAdmin() || auth()->user()->isInventoryManager())
                 <a href="{{ route('reports.inventory') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('reports.inventory') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                     Inventory Reports
@@ -243,24 +275,34 @@
                     <svg class="w-4 h-4 mr-3 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
                     RTO Reports
                 </a>
+                @endif
+                @endif
 
                 <!-- EMPLOYEES & AUDIT -->
+                @if(auth()->user()->isAdmin() || auth()->user()->hasPermission(['employees.manage', 'audit.view', 'settings.manage']))
                 <div class="pt-4 pb-1.5 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                     <span>Administration</span>
                     <span class="flex-1 h-px bg-slate-800/60"></span>
                 </div>
+                @if(auth()->user()->isAdmin() || auth()->user()->hasPermission('employees.manage'))
                 <a href="{{ route('employees.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('employees.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     Employees & Roles
                 </a>
+                @endif
+                @if(auth()->user()->isAdmin() || auth()->user()->hasPermission('audit.view'))
                 <a href="{{ route('audit.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('audit.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Audit Logs
                 </a>
+                @endif
+                @if(auth()->user()->isAdmin() || auth()->user()->hasPermission('settings.manage'))
                 <a href="{{ route('settings.index') }}" class="nav-item-transition flex items-center px-3 py-2 rounded-lg font-medium transition {{ request()->routeIs('settings.*') ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white shadow-glow-teal font-semibold' : 'text-slate-400 hover:text-white hover:bg-slate-800/70' }}">
                     <svg class="w-4 h-4 mr-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     System Settings
                 </a>
+                @endif
+                @endif
             </div>
 
             <!-- Current User Footer -->
